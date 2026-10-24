@@ -1,527 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kiwci | Bio Link Roblox</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Creepster&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        spooky: {
-                            bg: '#07050a',
-                            card: '#0f0b15',
-                            orange: '#ff6b00',
-                            orangeGlow: '#ff8800',
-                            purple: '#9d4edd',
-                            darkPurple: '#240046',
-                            green: '#00ff66'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        spooky: ['Creepster', 'cursive'],
-                        title: ['Cinzel', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background-color: #07050a;
-            color: #f3f4f6;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Ambient Glowing Fog & Lights */
-        .spooky-bg-glow {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, rgba(157, 78, 221, 0.12) 40%, transparent 70%);
-            z-index: 0;
-            filter: blur(80px);
-            pointer-events: none;
-            animation: pulseSpooky 6s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulseSpooky {
-            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
-        }
-
-        /* Glassmorphism with Halloween Accents */
-        .spooky-glass {
-            background: rgba(15, 11, 21, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 107, 0, 0.2);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(157, 78, 221, 0.08);
-        }
-
-        .spooky-card {
-            background: rgba(22, 16, 32, 0.65);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .spooky-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 107, 0, 0.15), transparent);
-            transition: 0.6s;
-        }
-
-        .spooky-card:hover::before {
-            left: 100%;
-        }
-
-        .spooky-card:hover {
-            transform: translateY(-4px) scale(1.015);
-            border-color: rgba(255, 107, 0, 0.6);
-            box-shadow: 0 12px 30px -10px rgba(255, 107, 0, 0.3), 0 0 20px rgba(157, 78, 221, 0.2);
-        }
-
-        /* Spooky Canvas Layer for Animated Bats & Fog */
-        #spookyCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Spiderweb Corner SVG Styling */
-        .spiderweb {
-            position: fixed;
-            width: 160px;
-            height: 160px;
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 2;
-            filter: drop-shadow(0 0 6px #9d4edd);
-        }
-        .spiderweb-top-left { top: 0; left: 0; }
-        .spiderweb-top-right { top: 0; right: 0; transform: scaleX(-1); }
-
-        /* Neon Glow Animation for Headings */
-        .text-glow-orange {
-            text-shadow: 0 0 12px rgba(255, 107, 0, 0.6), 0 0 25px rgba(255, 107, 0, 0.3);
-        }
-
-        /* Audio Equalizer Bar Animation */
-        .eq-bar {
-            width: 3px;
-            background-color: #ff6b00;
-            border-radius: 3px;
-            animation: eqAnimation 1.2s ease-in-out infinite alternate;
-        }
-        .eq-bar:nth-child(1) { height: 10px; animation-delay: 0.1s; }
-        .eq-bar:nth-child(2) { height: 18px; animation-delay: 0.3s; }
-        .eq-bar:nth-child(3) { height: 8px;  animation-delay: 0.2s; }
-        .eq-bar:nth-child(4) { height: 14px; animation-delay: 0.4s; }
-
-        .eq-paused .eq-bar {
-            animation-play-state: paused;
-            height: 4px !important;
-        }
-
-        @keyframes eqAnimation {
-            0% { height: 4px; }
-            100% { height: 20px; }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #07050a; }
-        ::-webkit-scrollbar-thumb { background: #240046; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ff6b00; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>KiwAI — Central de IAs</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#121620;--panel2:#191f2b;--line:#272e3c;--text:#eef2f8;--muted:#98a3b7;--accent:#a78bfa;--accent2:#6d5ce8;--green:#7ee0b3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#222044 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.wrap{max-width:1120px;margin:auto;padding:28px 20px 50px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:52px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;font-size:23px;letter-spacing:-.7px}.logo{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#c4b5fd,#7c3aed);color:#171124;font-size:24px;box-shadow:0 8px 30px #8b5cf633}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{text-align:center;max-width:760px;margin:0 auto 34px}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,66px);letter-spacing:-2.5px;line-height:1.05;margin:14px 0}.hero h1 span{background:linear-gradient(90deg,#ddd6fe,#a78bfa,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:17px;margin:0 auto;max-width:620px}.notice{max-width:850px;margin:0 auto 26px;padding:13px 15px;border:1px solid #574b7b;background:#18152a;border-radius:13px;color:#cfc7e9;font-size:13px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 14px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:3px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{background:linear-gradient(150deg,#171c27,#11151d);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;min-height:190px;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-3px);border-color:#6256a0}.card-top{display:flex;align-items:center;gap:11px}.appicon{width:42px;height:42px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-weight:850;font-size:17px;border:1px solid #343b4b}.card h3{font-size:16px;margin:0}.card small{color:var(--muted)}.card p{font-size:13px;color:var(--muted);margin:15px 0 18px;flex:1}.open{display:flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;background:#26213e;border:1px solid #514478;color:#e5ddff;border-radius:11px;padding:10px 12px;font-weight:700;font-size:13px}.open:hover{background:#342a55}.chatbox{margin-top:32px;border:1px solid var(--line);border-radius:20px;background:#11151d;overflow:hidden}.chathead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}.chathead h2{font-size:17px;margin:0}.chathead p{font-size:12px;color:var(--muted);margin:3px 0 0}.chatbody{padding:20px}.chatbody label{display:block;font-size:13px;color:#c8d0df;margin-bottom:8px}.chatbody textarea{width:100%;min-height:120px;resize:vertical;background:#0c0f15;border:1px solid #303747;border-radius:13px;padding:14px;color:var(--text);outline:none}.chatbody textarea:focus{border-color:var(--accent)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.select{flex:1;min-width:210px;background:#1a202c;border:1px solid #303747;border-radius:11px;padding:11px;color:var(--text)}.primary{background:linear-gradient(100deg,#a78bfa,#7c5ce7);border:0;color:#120e20;border-radius:11px;padding:11px 18px;font-weight:850}.secondary{background:#1b212d;border:1px solid var(--line);color:var(--text);border-radius:11px;padding:10px 13px}.hint{color:var(--muted);font-size:12px;margin:12px 0 0}.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chip{border:1px solid var(--line);background:#171c27;color:#c8d0df;border-radius:99px;padding:7px 10px;font-size:12px}.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.tool{padding:16px;border:1px solid var(--line);border-radius:15px;background:#121620}.tool h3{margin:0 0 6px;font-size:14px}.tool p{color:var(--muted);font-size:12px;margin:0 0 13px}.tool button{width:100%}.footer{margin-top:35px;text-align:center;color:#717d91;font-size:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#242a38;border:1px solid #414a5c;border-radius:12px;padding:10px 15px;display:none;max-width:90vw;z-index:5}.toast.show{display:block}
+@media(max-width:780px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tools{grid-template-columns:1fr}.top{margin-bottom:38px}}@media(max-width:520px){.wrap{padding:18px 13px 35px}.grid{grid-template-columns:1fr}.card{min-height:0}.hero h1{letter-spacing:-1.6px}.pill{display:none}.chathead{align-items:flex-start;flex-direction:column}.row>*{width:100%}.primary,.secondary{width:100%}}
+</style>
 </head>
-<body class="flex flex-col items-center justify-between p-4 md:p-8 relative selection:bg-spooky-orange selection:text-black">
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">K</div><span>KiwAI</span></div>
+    <div class="pill">✦ Central de inteligência artificial</div>
+  </header>
 
-    <!-- Spiderweb SVGs in corners -->
-    <svg class="spiderweb spiderweb-top-left" viewBox="0 0 100 100" fill="none" stroke="#9d4edd" stroke-width="1">
-        <path d="M0,0 L100,0 M0,0 L0,100 M0,0 L100,100 M0,0 L50,100 M0,0 L100,50" />
-        <path d="M20,0 Q20,20 0,20 M40,0 Q40,40 0,40 M60,0 Q60,60 0,60 M80,0 Q80,80 0,80" />
-        <path d="M15,15 Q30,15 30,0 M30,30 Q60,30 60,0 M45,45 Q90,45 90,0" />
-    </svg>
-    <svg class="spiderweb spiderweb-top-right" viewBox="0 0 100 100" fill="none" stroke="#9d4edd" stroke-width="1">
-        <path d="M0,0 L100,0 M0,0 L0,100 M0,0 L100,100 M0,0 L50,100 M0,0 L100,50" />
-        <path d="M20,0 Q20,20 0,20 M40,0 Q40,40 0,40 M60,0 Q60,60 0,60 M80,0 Q80,80 0,80" />
-        <path d="M15,15 Q30,15 30,0 M30,30 Q60,30 60,0 M45,45 Q90,45 90,0" />
-    </svg>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">UM SÓ LUGAR · VÁRIAS POSSIBILIDADES</div>
+      <h1>Tua central de <span>inteligência.</span></h1>
+      <p>Acesse ferramentas de IA, prepare perguntas e organize teu fluxo de trabalho em uma interface só.</p>
+    </section>
 
-    <!-- Canvas for floating bats & spooky mist particles -->
-    <canvas id="spookyCanvas"></canvas>
+    <div class="notice">🔒 <b>Transparência:</b> este site funciona no GitHub Pages, sem servidor próprio. Os botões abrem os serviços oficiais. Ele não envia perguntas automaticamente para as APIs nem guarda chaves secretas.</div>
 
-    <!-- Ambient Glowing Gradient Spheres -->
-    <div class="spooky-bg-glow"></div>
+    <div class="section-head"><div><h2>Explorar IAs</h2><p>Abre o serviço oficial em uma nova aba.</p></div><span class="pill">10 serviços</span></div>
+    <section class="grid" id="aiGrid">
+      <article class="card"><div class="card-top"><div class="appicon">◎</div><div><h3>ChatGPT</h3><small>OpenAI</small></div></div><p>Conversa, escrita, explicações, ideias e ajuda com programação.</p><a class="open" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Abrir ChatGPT ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">✦</div><div><h3>Google Gemini</h3><small>Google</small></div></div><p>Assistente de IA para perguntas, criação e tarefas multimodais.</p><a class="open" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Abrir Gemini ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">C</div><div><h3>Claude</h3><small>Anthropic</small></div></div><p>Assistência para escrita, análise, raciocínio e código.</p><a class="open" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Abrir Claude ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">D</div><div><h3>DeepSeek</h3><small>DeepSeek</small></div></div><p>Assistente de IA para perguntas, raciocínio e programação.</p><a class="open" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">Abrir DeepSeek ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">◉</div><div><h3>Perplexity</h3><small>Pesquisa com IA</small></div></div><p>Pesquisa na web e respostas com referências, conforme o serviço.</p><a class="open" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Abrir Perplexity ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">𝕏</div><div><h3>Grok</h3><small>xAI</small></div></div><p>Assistente de IA para perguntas, ideias e informações atuais.</p><a class="open" href="https://grok.com/" target="_blank" rel="noopener noreferrer">Abrir Grok ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">◈</div><div><h3>Microsoft Copilot</h3><small>Microsoft</small></div></div><p>Assistente para perguntas, criação e produtividade.</p><a class="open" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Abrir Copilot ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">∞</div><div><h3>Meta AI</h3><small>Meta</small></div></div><p>Assistente para conversar, explorar ideias e criar conteúdo.</p><a class="open" href="https://www.meta.ai/" target="_blank" rel="noopener noreferrer">Abrir Meta AI ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">M</div><div><h3>Le Chat</h3><small>Mistral AI</small></div></div><p>Assistente da Mistral AI para escrita, pesquisa e produtividade.</p><a class="open" href="https://chat.mistral.ai/" target="_blank" rel="noopener noreferrer">Abrir Le Chat ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">P</div><div><h3>Poe</h3><small>Quora</small></div></div><p>Um lugar para explorar diferentes bots e modelos de IA.</p><a class="open" href="https://poe.com/" target="_blank" rel="noopener noreferrer">Abrir Poe ↗</a></article>
+    </section>
 
-    <header class="w-full max-w-xl flex items-center justify-between mb-8 z-20">
-        <!-- Audio Player Button -->
-        <button id="audioToggleBtn" onclick="toggleSpookyAudio()" class="spooky-glass px-4 py-2 rounded-2xl flex items-center gap-3 hover:border-spooky-orange/60 transition-all cursor-pointer group">
-            <div id="eqContainer" class="flex items-center gap-0.5 h-5 px-1 eq-paused">
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-                <div class="eq-bar"></div>
-            </div>
-            <span id="audioText" class="text-xs font-bold tracking-wider text-slate-300 group-hover:text-spooky-orange uppercase transition-colors">Spooky Music</span>
-            <i data-lucide="music" class="w-4 h-4 text-spooky-orange"></i>
-        </button>
-
-        <!-- Share Bio Link Button -->
-        <button onclick="copyBioLink()" class="spooky-glass p-2.5 rounded-2xl flex items-center justify-center text-slate-300 hover:text-spooky-orange hover:border-spooky-orange/60 transition-all cursor-pointer" title="Copiar Link da Bio">
-            <i data-lucide="share-2" class="w-4 h-4"></i>
-        </button>
-    </header>
-
-    <main class="w-full max-w-xl flex flex-col items-center z-10 flex-grow">
-
-        <!-- User Profile Hero -->
-        <div class="w-full text-center flex flex-col items-center mb-8 relative">
-            
-            <!-- Avatar Frame with Halloween Aura -->
-            <a href="https://www.roblox.com/users/4111011480/profile" target="_blank" rel="noopener noreferrer" class="relative group cursor-pointer block" title="Ir para o perfil do Roblox">
-                <!-- Glowing Outer Ring -->
-                <div class="absolute -inset-2 bg-gradient-to-r from-spooky-orange via-spooky-purple to-spooky-orange rounded-full blur-md opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-500"></div>
-                
-                <!-- Avatar Image -->
-                <img src="https://tr.rbxcdn.com/30DAY-Avatar-D36EB613A6D9DF8B310A5860D304555B-Png/720/720/Avatar/Webp/noFilter" 
-                     alt="Avatar Roblox" 
-                     class="relative w-36 h-36 md:w-40 md:h-40 rounded-full object-cover border-2 border-spooky-orange bg-spooky-bg p-1 shadow-2xl">
-                
-                <!-- Pumpkin Icon Badge -->
-                <div class="absolute bottom-1 right-1 bg-spooky-orange text-black p-2 rounded-full border-2 border-spooky-bg shadow-lg flex items-center justify-center animate-bounce" title="Halloween Special">
-                    <span class="text-xs">🎃</span>
-                </div>
-            </a>
-
-            <!-- Username -->
-            <h1 class="font-title text-3xl md:text-4xl font-extrabold mt-6 tracking-wide text-glow-orange text-white flex items-center justify-center gap-2">
-                kiwci
-            </h1>
-
-            <!-- Bio Subtitle -->
-            <p class="text-slate-300 text-sm mt-2 max-w-md px-4 font-medium leading-relaxed">
-                🦇 Bem-vindo ao meu perfil! Clique nos cards abaixo para me adicionar diretamente no Roblox.
-            </p>
+    <section class="chatbox">
+      <div class="chathead"><div><h2>Preparar uma pergunta</h2><p>Escreve uma vez e copia para usar na IA que escolheres.</p></div><span class="pill">Funciona localmente</span></div>
+      <div class="chatbody">
+        <label for="prompt">Tua pergunta ou instrução</label>
+        <textarea id="prompt" placeholder="Ex.: Explica como funciona um conversor de unidades em JavaScript..."></textarea>
+        <div class="row">
+          <select class="select" id="target" aria-label="Escolher serviço">
+            <option value="chatgpt">ChatGPT</option>
+            <option value="gemini">Google Gemini</option>
+            <option value="claude">Claude</option>
+            <option value="deepseek">DeepSeek</option>
+            <option value="perplexity">Perplexity</option>
+            <option value="grok">Grok</option>
+            <option value="copilot">Microsoft Copilot</option>
+            <option value="metaai">Meta AI</option>
+            <option value="mistral">Le Chat (Mistral AI)</option>
+            <option value="poe">Poe</option>
+          </select>
+          <button class="primary" id="sendBtn">Enviar para IA ↗</button>
+          <button class="secondary" id="copyBtn">Copiar pergunta</button>
         </div>
-
-        <div class="w-full space-y-4">
-
-            <!-- ACCOUNT CARD 1 -->
-            <div onclick="window.open('https://www.roblox.com/users/4111011480/profile', '_blank')" 
-                 class="spooky-card rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-5 cursor-pointer group border-spooky-orange/40">
-                
-                <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-D36EB613A6D9DF8B310A5860D304555B-Png/720/720/Avatar/Webp/noFilter" 
-                         alt="Avatar Roblox 1" 
-                         class="w-16 h-16 rounded-2xl object-cover bg-spooky-darkPurple border border-spooky-orange/50 group-hover:scale-105 transition-transform">
-                    
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 class="font-bold text-lg text-white group-hover:text-spooky-orange transition-colors">kiwci</h2>
-                            <i data-lucide="external-link" class="w-4 h-4 text-spooky-orange opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Clique para abrir o Perfil no Roblox</p>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0" onclick="event.stopPropagation()">
-                    <button onclick="copyToClipboard('4111011480', 'ID da conta 1 copiado!')" 
-                            class="spooky-glass p-3 rounded-xl text-slate-300 hover:text-spooky-orange hover:border-spooky-orange/50 transition-colors flex items-center justify-center cursor-pointer" title="Copiar ID da Conta">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                    </button>
-                    
-                    <a href="https://www.roblox.com/users/4111011480/profile" target="_blank" rel="noopener noreferrer" 
-                       class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-spooky-orange to-orange-600 hover:from-orange-500 hover:to-spooky-orange text-black font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-spooky-orange/20 transition-all cursor-pointer">
-                        <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        <span>Adicionar</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ACCOUNT CARD 2 -->
-            <div onclick="window.open('https://www.roblox.com/pt/users/2380307/profile', '_blank')" 
-                 class="spooky-card rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-5 cursor-pointer group border-spooky-orange/40">
-                
-                <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-1265D8B8181FC71FE4B4086849909E02-Png/720/720/Avatar/Webp/noFilter" 
-                         alt="Avatar Roblox 2" 
-                         class="w-16 h-16 rounded-2xl object-cover bg-spooky-darkPurple border border-spooky-orange/50 group-hover:scale-105 transition-transform">
-                    
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 class="font-bold text-lg text-white group-hover:text-spooky-orange transition-colors">toby</h2>
-                            <i data-lucide="external-link" class="w-4 h-4 text-spooky-orange opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Clique para abrir o Perfil no Roblox</p>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0" onclick="event.stopPropagation()">
-                    <button onclick="copyToClipboard('2380307', 'ID da conta toby copiado!')" 
-                            class="spooky-glass p-3 rounded-xl text-slate-300 hover:text-spooky-orange hover:border-spooky-orange/50 transition-colors flex items-center justify-center cursor-pointer" title="Copiar ID da Conta">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                    </button>
-                    
-                    <a href="https://www.roblox.com/pt/users/2380307/profile" target="_blank" rel="noopener noreferrer" 
-                       class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-spooky-orange to-orange-600 hover:from-orange-500 hover:to-spooky-orange text-black font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-spooky-orange/20 transition-all cursor-pointer">
-                        <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        <span>Adicionar</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ACCOUNT CARD 3 -->
-            <div onclick="window.open('https://www.roblox.com/pt/users/9354796896/profile?friendshipSourceType=PlayerSearch', '_blank')" 
-                 class="spooky-card rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-5 cursor-pointer group border-spooky-orange/40">
-                
-                <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-A68871948C6FC544C8C14AE954F9FFDB-Png/720/720/Avatar/Webp/noFilter" 
-                         alt="Avatar Roblox 3" 
-                         class="w-16 h-16 rounded-2xl object-cover bg-spooky-darkPurple border border-spooky-orange/50 group-hover:scale-105 transition-transform">
-                    
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 class="font-bold text-lg text-white group-hover:text-spooky-orange transition-colors">korou</h2>
-                            <i data-lucide="external-link" class="w-4 h-4 text-spooky-orange opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Clique para abrir o Perfil no Roblox</p>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0" onclick="event.stopPropagation()">
-                    <button onclick="copyToClipboard('9354796896', 'ID da conta korou copiado!')" 
-                            class="spooky-glass p-3 rounded-xl text-slate-300 hover:text-spooky-orange hover:border-spooky-orange/50 transition-colors flex items-center justify-center cursor-pointer" title="Copiar ID da Conta">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                    </button>
-                    
-                    <a href="https://www.roblox.com/pt/users/9354796896/profile?friendshipSourceType=PlayerSearch" target="_blank" rel="noopener noreferrer" 
-                       class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-spooky-orange to-orange-600 hover:from-orange-500 hover:to-spooky-orange text-black font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-spooky-orange/20 transition-all cursor-pointer">
-                        <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        <span>Adicionar</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ACCOUNT CARD 4 -->
-            <div onclick="window.open('https://www.roblox.com/pt/users/9477873575/profile', '_blank')" 
-                 class="spooky-card rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-5 cursor-pointer group border-spooky-orange/40">
-                
-                <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <img src="https://tr.rbxcdn.com/30DAY-Avatar-482CFC525C498601729F7B8782AFF53C-Png/720/720/Avatar/Webp/noFilter" 
-                         alt="Avatar Roblox 4" 
-                         class="w-16 h-16 rounded-2xl object-cover bg-spooky-darkPurple border border-spooky-orange/50 group-hover:scale-105 transition-transform">
-                    
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h2 class="font-bold text-lg text-white group-hover:text-spooky-orange transition-colors">kwz_xd</h2>
-                            <i data-lucide="external-link" class="w-4 h-4 text-spooky-orange opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-0.5">Clique para abrir o Perfil no Roblox</p>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end border-t sm:border-t-0 border-white/5 pt-3 sm:pt-0" onclick="event.stopPropagation()">
-                    <button onclick="copyToClipboard('9477873575', 'ID da conta kwz_xd copiado!')" 
-                            class="spooky-glass p-3 rounded-xl text-slate-300 hover:text-spooky-orange hover:border-spooky-orange/50 transition-colors flex items-center justify-center cursor-pointer" title="Copiar ID da Conta">
-                        <i data-lucide="copy" class="w-4 h-4"></i>
-                    </button>
-                    
-                    <a href="https://www.roblox.com/pt/users/9477873575/profile" target="_blank" rel="noopener noreferrer" 
-                       class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-spooky-orange to-orange-600 hover:from-orange-500 hover:to-spooky-orange text-black font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-spooky-orange/20 transition-all cursor-pointer">
-                        <i data-lucide="user-plus" class="w-4 h-4"></i>
-                        <span>Adicionar</span>
-                    </a>
-                </div>
-            </div>
-
+        <div class="quick">
+          <button class="chip" data-prompt="Explica este assunto passo a passo, com exemplos simples: ">📘 Explicar assunto</button>
+          <button class="chip" data-prompt="Ajuda-me a criar um projeto web. Explica a estrutura e fornece código comentado: ">💻 Criar código</button>
+          <button class="chip" data-prompt="Dá-me 10 ideias originais e práticas para: ">💡 Gerar ideias</button>
+          <button class="chip" data-prompt="Resume o texto a seguir em tópicos claros: ">📝 Resumir texto</button>
         </div>
+        <p class="hint">O botão tenta passar a pergunta pela URL nos serviços que aceitam esse recurso e também copia o texto como alternativa. O comportamento pode mudar conforme cada serviço; se a pergunta não aparecer preenchida, cola com Ctrl+V. Este site não usa nem armazena chaves de API.</p>
+      </div>
+    </section>
 
-    </main>
+    <div class="section-head"><div><h2>Ferramentas rápidas</h2><p>Pequenas utilidades que funcionam direto no navegador.</p></div></div>
+    <section class="tools">
+      <article class="tool"><h3>🔤 Contador de texto</h3><p>Conta caracteres e palavras da tua pergunta.</p><button class="secondary" id="countBtn">Contar texto</button><p id="countResult" aria-live="polite"></p></article>
+      <article class="tool"><h3>📋 Copiar tudo</h3><p>Copia o texto escrito para a área de transferência.</p><button class="secondary" id="copyAllBtn">Copiar texto</button></article>
+      <article class="tool"><h3>🧹 Limpar campo</h3><p>Apaga o texto atual para começar de novo.</p><button class="secondary" id="clearBtn">Limpar</button></article>
+    </section>
+  </main>
+  <footer class="footer">KiwAI • Projeto independente, não afiliado aos serviços listados.<br>As marcas pertencem aos seus respectivos proprietários.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const urls = {
+    chatgpt: "https://chatgpt.com/",
+    gemini: "https://gemini.google.com/",
+    claude: "https://claude.ai/",
+    deepseek: "https://chat.deepseek.com/",
+    perplexity: "https://www.perplexity.ai/",
+    grok: "https://grok.com/",
+    copilot: "https://copilot.microsoft.com/",
+    metaai: "https://www.meta.ai/",
+    mistral: "https://chat.mistral.ai/",
+    poe: "https://poe.com/"
+  };
 
-    <audio id="spookyAudio" loop preload="none">
-        <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9c0f9a2e37.mp3?filename=halloween-spooky-ambient-123472.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Toast Notification Popup -->
-    <div id="toast" class="fixed bottom-6 z-50 transform translate-y-20 opacity-0 spooky-glass border-spooky-orange/50 px-5 py-3 rounded-2xl flex items-center gap-3 shadow-2xl pointer-events-none transition-all duration-300">
-        <div class="w-8 h-8 rounded-full bg-spooky-orange/20 text-spooky-orange flex items-center justify-center">
-            <i data-lucide="check" class="w-5 h-5"></i>
-        </div>
-        <span id="toastMessage" class="text-sm font-semibold text-white">Copiado com sucesso!</span>
-    </div>
-
-    <!-- Footer -->
-    <footer class="w-full text-center py-6 text-xs text-slate-600 mt-6 z-10 font-medium">
-        <p>🎃 Feito por Kiwci 🎃</p>
-    </footer>
-
-    <script>
-        // Lucide Icons Init
-        window.addEventListener('load', () => {
-            lucide.createIcons();
-            initSpookyCanvas();
-        });
-
-        // Copy to Clipboard System
-        function copyToClipboard(text, msg) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            showToast(msg || "Copiado para a área de transferência!");
-        }
-
-        function copyBioLink() {
-            copyToClipboard(window.location.href, "Link da Bio copiado!");
-        }
-
-        // Toast Feedback Popup
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-
-            toastMessage.innerText = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 2500);
-        }
-
-        // Halloween Background Audio Toggle
-        let isPlaying = false;
-        const audio = document.getElementById('spookyAudio');
-        const audioText = document.getElementById('audioText');
-        const eqContainer = document.getElementById('eqContainer');
-
-        function toggleSpookyAudio() {
-            if (!isPlaying) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    audioText.innerText = "Spooky Music On";
-                    eqContainer.classList.remove('eq-paused');
-                }).catch(err => {
-                    console.log("Autoplay blocked", err);
-                });
-            } else {
-                audio.pause();
-                isPlaying = false;
-                audioText.innerText = "Spooky Music Off";
-                eqContainer.classList.add('eq-paused');
-            }
-        }
-
-        // Animated Halloween Bat & Particle Canvas
-        function initSpookyCanvas() {
-            const canvas = document.getElementById('spookyCanvas');
-            const ctx = canvas.getContext('2d');
-
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            // Bats & Glow Particles
-            const bats = [];
-            const batCount = 12;
-
-            for (let i = 0; i < batCount; i++) {
-                bats.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 12 + 8,
-                    speedX: (Math.random() - 0.5) * 2,
-                    speedY: (Math.random() - 0.5) * 1.5,
-                    wingState: 0,
-                    wingSpeed: Math.random() * 0.15 + 0.08
-                });
-            }
-
-            function drawBat(b) {
-                ctx.save();
-                ctx.translate(b.x, b.y);
-                ctx.fillStyle = "rgba(157, 78, 221, 0.4)";
-                
-                // Draw simple flying bat shape
-                ctx.beginPath();
-                ctx.arc(0, 0, b.size * 0.3, 0, Math.PI * 2);
-                
-                // Wings animation
-                const wingY = Math.sin(b.wingState) * (b.size * 0.6);
-                ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(-b.size, -b.size + wingY, -b.size * 1.5, wingY);
-                ctx.quadraticCurveTo(-b.size * 0.8, b.size * 0.5, 0, 0);
-                
-                ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(b.size, -b.size + wingY, b.size * 1.5, wingY);
-                ctx.quadraticCurveTo(b.size * 0.8, b.size * 0.5, 0, 0);
-
-                ctx.fill();
-                ctx.restore();
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                bats.forEach(b => {
-                    b.x += b.speedX;
-                    b.y += b.speedY;
-                    b.wingState += b.wingSpeed;
-
-                    // Wrap around screen edges
-                    if (b.x < -50) b.x = canvas.width + 50;
-                    if (b.x > canvas.width + 50) b.x = -50;
-                    if (b.y < -50) b.y = canvas.height + 50;
-                    if (b.y > canvas.height + 50) b.y = -50;
-
-                    drawBat(b);
-                });
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-        }
-    </script>
+  // Alguns serviços aceitam texto pela URL; isso pode mudar conforme o serviço.
+  // Se não houver suporte, o texto é copiado e o serviço é aberto para colar manualmente.
+  function makePromptUrl(provider, text) {
+    const q = encodeURIComponent(text);
+    if (provider === "chatgpt") return "https://chatgpt.com/?q=" + q;
+    if (provider === "gemini") return "https://gemini.google.com/app?prompt=" + q;
+    if (provider === "perplexity") return "https://www.perplexity.ai/search?q=" + q;
+    return urls[provider];
+  }
+  const prompt = $("prompt");
+  let toastTimer;
+  function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+  }
+  async function copyText(text) {
+    if (!text.trim()) { toast("Escreve alguma coisa primeiro."); return; }
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Copiado para a área de transferência!");
+    } catch (_) {
+      prompt.focus(); prompt.select();
+      const ok = document.execCommand("copy");
+      toast(ok ? "Texto copiado!" : "Seleciona o texto e copia manualmente.");
+    }
+  }
+  $("copyBtn").addEventListener("click", () => copyText(prompt.value));
+  $("copyAllBtn").addEventListener("click", () => copyText(prompt.value));
+  $("sendBtn").addEventListener("click", async () => {
+    const text = prompt.value.trim();
+    if (!text) { toast("Escreve tua pergunta primeiro."); prompt.focus(); return; }
+    const provider = $("target").value;
+    // Copia também como plano B para serviços que ignoram parâmetros de texto.
+    try { await navigator.clipboard.writeText(text); } catch (_) {}
+    const url = makePromptUrl(provider, text);
+    window.open(url, "_blank", "noopener,noreferrer");
+    toast(
+      provider === "chatgpt" || provider === "gemini" || provider === "perplexity"
+        ? "IA aberta. Se a pergunta não aparecer, cola com Ctrl+V."
+        : "Pergunta copiada e IA aberta. Cola com Ctrl+V."
+    );
+  });
+  $("clearBtn").addEventListener("click", () => {
+    prompt.value = "";
+    $("countResult").textContent = "";
+    prompt.focus();
+  });
+  $("countBtn").addEventListener("click", () => {
+    const text = prompt.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    $("countResult").textContent = `${words} palavra(s) · ${prompt.value.length} caractere(s)`;
+  });
+  document.querySelectorAll("[data-prompt]").forEach(button => {
+    button.addEventListener("click", () => {
+      prompt.value = button.dataset.prompt + prompt.value;
+      prompt.focus();
+    });
+  });
+})();
+</script>
 </body>
 </html>
