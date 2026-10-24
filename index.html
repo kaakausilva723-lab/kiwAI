@@ -1,1 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>KiwAI — Central de IAs</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#121620;--panel2:#191f2b;--line:#272e3c;--text:#eef2f8;--muted:#98a3b7;--accent:#a78bfa;--accent2:#6d5ce8;--green:#7ee0b3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#222044 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer}a{color:inherit}.wrap{max-width:1120px;margin:auto;padding:28px 20px 50px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:52px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;font-size:23px;letter-spacing:-.7px}.logo{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(140deg,#c4b5fd,#7c3aed);color:#171124;font-size:24px;box-shadow:0 8px 30px #8b5cf633}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{text-align:center;max-width:760px;margin:0 auto 34px}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,66px);letter-spacing:-2.5px;line-height:1.05;margin:14px 0}.hero h1 span{background:linear-gradient(90deg,#ddd6fe,#a78bfa,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);font-size:17px;margin:0 auto;max-width:620px}.notice{max-width:850px;margin:0 auto 26px;padding:13px 15px;border:1px solid #574b7b;background:#18152a;border-radius:13px;color:#cfc7e9;font-size:13px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 14px}.section-head h2{font-size:18px;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:3px 0 0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{background:linear-gradient(150deg,#171c27,#11151d);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;min-height:190px;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-3px);border-color:#6256a0}.card-top{display:flex;align-items:center;gap:11px}.appicon{width:42px;height:42px;border-radius:13px;background:var(--panel2);display:grid;place-items:center;font-weight:850;font-size:17px;border:1px solid #343b4b}.card h3{font-size:16px;margin:0}.card small{color:var(--muted)}.card p{font-size:13px;color:var(--muted);margin:15px 0 18px;flex:1}.open{display:flex;justify-content:center;align-items:center;gap:8px;text-decoration:none;background:#26213e;border:1px solid #514478;color:#e5ddff;border-radius:11px;padding:10px 12px;font-weight:700;font-size:13px}.open:hover{background:#342a55}.chatbox{margin-top:32px;border:1px solid var(--line);border-radius:20px;background:#11151d;overflow:hidden}.chathead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}.chathead h2{font-size:17px;margin:0}.chathead p{font-size:12px;color:var(--muted);margin:3px 0 0}.chatbody{padding:20px}.chatbody label{display:block;font-size:13px;color:#c8d0df;margin-bottom:8px}.chatbody textarea{width:100%;min-height:120px;resize:vertical;background:#0c0f15;border:1px solid #303747;border-radius:13px;padding:14px;color:var(--text);outline:none}.chatbody textarea:focus{border-color:var(--accent)}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}.select{flex:1;min-width:210px;background:#1a202c;border:1px solid #303747;border-radius:11px;padding:11px;color:var(--text)}.primary{background:linear-gradient(100deg,#a78bfa,#7c5ce7);border:0;color:#120e20;border-radius:11px;padding:11px 18px;font-weight:850}.secondary{background:#1b212d;border:1px solid var(--line);color:var(--text);border-radius:11px;padding:10px 13px}.hint{color:var(--muted);font-size:12px;margin:12px 0 0}.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.chip{border:1px solid var(--line);background:#171c27;color:#c8d0df;border-radius:99px;padding:7px 10px;font-size:12px}.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.tool{padding:16px;border:1px solid var(--line);border-radius:15px;background:#121620}.tool h3{margin:0 0 6px;font-size:14px}.tool p{color:var(--muted);font-size:12px;margin:0 0 13px}.tool button{width:100%}.footer{margin-top:35px;text-align:center;color:#717d91;font-size:12px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#242a38;border:1px solid #414a5c;border-radius:12px;padding:10px 15px;display:none;max-width:90vw;z-index:5}.toast.show{display:block}
+@media(max-width:780px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tools{grid-template-columns:1fr}.top{margin-bottom:38px}}@media(max-width:520px){.wrap{padding:18px 13px 35px}.grid{grid-template-columns:1fr}.card{min-height:0}.hero h1{letter-spacing:-1.6px}.pill{display:none}.chathead{align-items:flex-start;flex-direction:column}.row>*{width:100%}.primary,.secondary{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">K</div><span>KiwAI</span></div>
+    <div class="pill">✦ Central de inteligência artificial</div>
+  </header>
 
+  <main>
+    <section class="hero">
+      <div class="eyebrow">UM SÓ LUGAR · VÁRIAS POSSIBILIDADES</div>
+      <h1>Tua central de <span>inteligência.</span></h1>
+      <p>Acesse ferramentas de IA, prepare perguntas e organize teu fluxo de trabalho em uma interface só.</p>
+    </section>
+
+    <div class="notice">🔒 <b>Transparência:</b> este site funciona no GitHub Pages, sem servidor próprio. Os botões abrem os serviços oficiais. Ele não envia perguntas automaticamente para as APIs nem guarda chaves secretas.</div>
+
+    <div class="section-head"><div><h2>Explorar IAs</h2><p>Abre o serviço oficial em uma nova aba.</p></div><span class="pill">10 serviços</span></div>
+    <section class="grid" id="aiGrid">
+      <article class="card"><div class="card-top"><div class="appicon">◎</div><div><h3>ChatGPT</h3><small>OpenAI</small></div></div><p>Conversa, escrita, explicações, ideias e ajuda com programação.</p><a class="open" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">Abrir ChatGPT ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">✦</div><div><h3>Google Gemini</h3><small>Google</small></div></div><p>Assistente de IA para perguntas, criação e tarefas multimodais.</p><a class="open" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">Abrir Gemini ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">C</div><div><h3>Claude</h3><small>Anthropic</small></div></div><p>Assistência para escrita, análise, raciocínio e código.</p><a class="open" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">Abrir Claude ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">D</div><div><h3>DeepSeek</h3><small>DeepSeek</small></div></div><p>Assistente de IA para perguntas, raciocínio e programação.</p><a class="open" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">Abrir DeepSeek ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">◉</div><div><h3>Perplexity</h3><small>Pesquisa com IA</small></div></div><p>Pesquisa na web e respostas com referências, conforme o serviço.</p><a class="open" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer">Abrir Perplexity ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">𝕏</div><div><h3>Grok</h3><small>xAI</small></div></div><p>Assistente de IA para perguntas, ideias e informações atuais.</p><a class="open" href="https://grok.com/" target="_blank" rel="noopener noreferrer">Abrir Grok ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">◈</div><div><h3>Microsoft Copilot</h3><small>Microsoft</small></div></div><p>Assistente para perguntas, criação e produtividade.</p><a class="open" href="https://copilot.microsoft.com/" target="_blank" rel="noopener noreferrer">Abrir Copilot ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">∞</div><div><h3>Meta AI</h3><small>Meta</small></div></div><p>Assistente para conversar, explorar ideias e criar conteúdo.</p><a class="open" href="https://www.meta.ai/" target="_blank" rel="noopener noreferrer">Abrir Meta AI ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">M</div><div><h3>Le Chat</h3><small>Mistral AI</small></div></div><p>Assistente da Mistral AI para escrita, pesquisa e produtividade.</p><a class="open" href="https://chat.mistral.ai/" target="_blank" rel="noopener noreferrer">Abrir Le Chat ↗</a></article>
+      <article class="card"><div class="card-top"><div class="appicon">P</div><div><h3>Poe</h3><small>Quora</small></div></div><p>Um lugar para explorar diferentes bots e modelos de IA.</p><a class="open" href="https://poe.com/" target="_blank" rel="noopener noreferrer">Abrir Poe ↗</a></article>
+    </section>
+
+    <section class="chatbox">
+      <div class="chathead"><div><h2>Preparar uma pergunta</h2><p>Escreve uma vez e copia para usar na IA que escolheres.</p></div><span class="pill">Funciona localmente</span></div>
+      <div class="chatbody">
+        <label for="prompt">Tua pergunta ou instrução</label>
+        <textarea id="prompt" placeholder="Ex.: Explica como funciona um conversor de unidades em JavaScript..."></textarea>
+        <div class="row">
+          <select class="select" id="target" aria-label="Escolher serviço">
+            <option value="chatgpt">ChatGPT</option>
+            <option value="gemini">Google Gemini</option>
+            <option value="claude">Claude</option>
+            <option value="deepseek">DeepSeek</option>
+            <option value="perplexity">Perplexity</option>
+            <option value="grok">Grok</option>
+            <option value="copilot">Microsoft Copilot</option>
+            <option value="metaai">Meta AI</option>
+            <option value="mistral">Le Chat (Mistral AI)</option>
+            <option value="poe">Poe</option>
+          </select>
+          <button class="primary" id="sendBtn">Enviar para IA ↗</button>
+          <button class="secondary" id="copyBtn">Copiar pergunta</button>
+        </div>
+        <div class="quick">
+          <button class="chip" data-prompt="Explica este assunto passo a passo, com exemplos simples: ">📘 Explicar assunto</button>
+          <button class="chip" data-prompt="Ajuda-me a criar um projeto web. Explica a estrutura e fornece código comentado: ">💻 Criar código</button>
+          <button class="chip" data-prompt="Dá-me 10 ideias originais e práticas para: ">💡 Gerar ideias</button>
+          <button class="chip" data-prompt="Resume o texto a seguir em tópicos claros: ">📝 Resumir texto</button>
+        </div>
+        <p class="hint">O botão tenta passar a pergunta pela URL nos serviços que aceitam esse recurso e também copia o texto como alternativa. O comportamento pode mudar conforme cada serviço; se a pergunta não aparecer preenchida, cola com Ctrl+V. Este site não usa nem armazena chaves de API.</p>
+      </div>
+    </section>
+
+    <div class="section-head"><div><h2>Ferramentas rápidas</h2><p>Pequenas utilidades que funcionam direto no navegador.</p></div></div>
+    <section class="tools">
+      <article class="tool"><h3>🔤 Contador de texto</h3><p>Conta caracteres e palavras da tua pergunta.</p><button class="secondary" id="countBtn">Contar texto</button><p id="countResult" aria-live="polite"></p></article>
+      <article class="tool"><h3>📋 Copiar tudo</h3><p>Copia o texto escrito para a área de transferência.</p><button class="secondary" id="copyAllBtn">Copiar texto</button></article>
+      <article class="tool"><h3>🧹 Limpar campo</h3><p>Apaga o texto atual para começar de novo.</p><button class="secondary" id="clearBtn">Limpar</button></article>
+    </section>
+  </main>
+  <footer class="footer">KiwAI • Projeto independente, não afiliado aos serviços listados.<br>As marcas pertencem aos seus respectivos proprietários.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const urls = {
+    chatgpt: "https://chatgpt.com/",
+    gemini: "https://gemini.google.com/",
+    claude: "https://claude.ai/",
+    deepseek: "https://chat.deepseek.com/",
+    perplexity: "https://www.perplexity.ai/",
+    grok: "https://grok.com/",
+    copilot: "https://copilot.microsoft.com/",
+    metaai: "https://www.meta.ai/",
+    mistral: "https://chat.mistral.ai/",
+    poe: "https://poe.com/"
+  };
+
+  // Alguns serviços aceitam texto pela URL; isso pode mudar conforme o serviço.
+  // Se não houver suporte, o texto é copiado e o serviço é aberto para colar manualmente.
+  function makePromptUrl(provider, text) {
+    const q = encodeURIComponent(text);
+    if (provider === "chatgpt") return "https://chatgpt.com/?q=" + q;
+    if (provider === "gemini") return "https://gemini.google.com/app?prompt=" + q;
+    if (provider === "perplexity") return "https://www.perplexity.ai/search?q=" + q;
+    return urls[provider];
+  }
+  const prompt = $("prompt");
+  let toastTimer;
+  function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+  }
+  async function copyText(text) {
+    if (!text.trim()) { toast("Escreve alguma coisa primeiro."); return; }
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("Copiado para a área de transferência!");
+    } catch (_) {
+      prompt.focus(); prompt.select();
+      const ok = document.execCommand("copy");
+      toast(ok ? "Texto copiado!" : "Seleciona o texto e copia manualmente.");
+    }
+  }
+  $("copyBtn").addEventListener("click", () => copyText(prompt.value));
+  $("copyAllBtn").addEventListener("click", () => copyText(prompt.value));
+  $("sendBtn").addEventListener("click", async () => {
+    const text = prompt.value.trim();
+    if (!text) { toast("Escreve tua pergunta primeiro."); prompt.focus(); return; }
+    const provider = $("target").value;
+    // Copia também como plano B para serviços que ignoram parâmetros de texto.
+    try { await navigator.clipboard.writeText(text); } catch (_) {}
+    const url = makePromptUrl(provider, text);
+    window.open(url, "_blank", "noopener,noreferrer");
+    toast(
+      provider === "chatgpt" || provider === "gemini" || provider === "perplexity"
+        ? "IA aberta. Se a pergunta não aparecer, cola com Ctrl+V."
+        : "Pergunta copiada e IA aberta. Cola com Ctrl+V."
+    );
+  });
+  $("clearBtn").addEventListener("click", () => {
+    prompt.value = "";
+    $("countResult").textContent = "";
+    prompt.focus();
+  });
+  $("countBtn").addEventListener("click", () => {
+    const text = prompt.value.trim();
+    const words = text ? text.split(/\s+/).length : 0;
+    $("countResult").textContent = `${words} palavra(s) · ${prompt.value.length} caractere(s)`;
+  });
+  document.querySelectorAll("[data-prompt]").forEach(button => {
+    button.addEventListener("click", () => {
+      prompt.value = button.dataset.prompt + prompt.value;
+      prompt.focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>
